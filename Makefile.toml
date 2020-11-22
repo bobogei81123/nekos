@@ -1,0 +1,3 @@
+[tasks.gdb]
+command = "cargo"
+args = ["xrun", "--", "-s", "-S"]

@@ -1,0 +1,11 @@
+{
+    "initializationOptions": {
+        "checkOnSave": {
+            "overrideCommand": [
+                "cargo",
+                "xcheck",
+                "--message-format=json"
+            ]
+        }
+    }
+}

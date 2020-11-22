@@ -1,0 +1,59 @@
+[package]
+name = "rust_os"
+version = "0.1.0"
+authors = ["Meteor <bobogei81123@gmail.com>"]
+edition = "2018"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+[dependencies]
+linked_list_allocator = "0.8.0"
+pic8259_simple = "0.2.0"
+spin = "0.5.2"
+uart_16550 = "0.2.0"
+vga = "0.2.4"
+volatile = "0.2.6"
+x86_64 = "0.11.0"
+
+[dependencies.bootloader]
+version = "0.9.4"
+features = ["map_physical_memory"]
+
+[dependencies.lazy_static]
+version = "1.0"
+features = ["spin_no_std"]
+
+[package.metadata.bootloader]
+#kernel-stack-address = "0xFFFFF8000000000"
+kernel-stack-size = 4
+kernel-stack-address =   "0x0000000200000000"
+boot-info-address =      "0x0000000100000000"
+physical-memory-offset = "0x0000001000000000"
+
+[package.metadata.bootimage]
+run-args = [
+    "-device",
+    "isa-debug-exit,iobase=0xf4,iosize=0x04",
+    "-serial", "stdio",
+    "-display", "none"
+]
+test-args = [
+    "-device",
+    "isa-debug-exit,iobase=0xf4,iosize=0x04",
+    "-serial", "stdio",
+    "-display", "none"
+]
+test-success-exit-code = 33
+test-timeout = 60
+
+[[test]]
+name = "should_panic"
+harness = false
+
+[[test]]
+name = "stack_overflow"
+harness = false
